@@ -132,6 +132,11 @@ module.exports = {
                   '900': '#192b7e',
                 },
               },
+              
+            backgroundImage: theme => ({
+
+                'welcome': "url('/images/bg/welcome.png')",
+               }),
             fontFamily: {
                 sans: ['estedad', 'Nunito', ...defaultTheme.fontFamily.sans],
             },

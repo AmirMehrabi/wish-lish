@@ -10,16 +10,11 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-
                 <div class="flex justify-between text-4xl">
-                    <h2>لیست من</h2>
-                    <BreezeButtonLink
-                        :href="route('add')"
-                        :active="route().current('add')"
-                    >
-                        افزودن
-                    </BreezeButtonLink>
+                    <h2>
+                        لیست
+                        <span>{{ person.name }}</span>
+                    </h2>
                 </div>
 
                 <div class="rounded-2xl bg-gray-100 flex p-2 mt-4 gap-4">
@@ -80,6 +75,7 @@
                                 </a>
 
                                 <a
+                                    v-if="item.is_reserved == 0"
                                     href="#"
                                     class="opacity-0 group-hover:opacity-100 py-1 px-2 rounded-xl bg-white shadow"
                                 >
@@ -114,6 +110,7 @@ export default {
     },
     props: {
         items: Object,
+        person: Object,
     },
     mounted: function () {
         this.sortBy(this.search);
@@ -136,6 +133,7 @@ export default {
             }
         },
     },
+
     components: {
         BreezeAuthenticatedLayout,
         Head,

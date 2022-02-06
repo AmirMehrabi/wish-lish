@@ -3,6 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\ItemController;
+use App\Models\Item;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,19 +27,44 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('qr-code-g', function () {
+  
+    $code = \QrCode::size(500)
+            ->format('png')
+            ->generate('ItSolutionStuff.com', public_path('images/qrcode.png'));
+    
+            return Inertia::render('Profile', [
+                'code' => $code
+            ]);
+    
+});
+
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard', [
+        'items' => Item::where('user_id', auth()->user()->id)->get()
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/list/{id}/{slug}', function ($id, $slug) {
+    $user = User::where('slug', $slug)->firstOrFail();
+    
+    return Inertia::render('List', [
+        'items' => Item::where('user_id', $id)->get(),
+        'person' => $user,
+    ]);
+})->middleware(['auth', 'verified'])->name('list');
 
 Route::get('/add', function () {
     return Inertia::render('Add');
 })->middleware(['auth', 'verified'])->name('add');
 
 Route::post('add', function() {
-    // return ;
+    Request::validate([
+        'address' => ['required', 'regex:/[(http|ftp|https)]*[www.]*digikala.com/m'],
+    ]);
     $data = OpenGraph::fetch(Request::get('address'), true);
     if(!empty($data['product:price:amount'])) {
-        $data['price'] = $data['product:price:amount'];
+        $data['price'] = $data['product:price:amount'] / 10;
     }
     
     return Inertia::render('Add', [
@@ -44,6 +72,8 @@ Route::post('add', function() {
       ]);
     //     return $data;
 })->name('getData');
+
+Route::resource('item', ItemController::class);
 
 
 // public function getData(){

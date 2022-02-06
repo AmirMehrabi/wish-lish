@@ -2,14 +2,14 @@
     <Head title="Confirm Password" />
 
     <div class="mb-4 text-sm text-gray-600">
-        This is a secure area of the application. Please confirm your password before continuing.
+        قصد ورود به یک بخش محافظت‌شده را دارید. لطفاً برای ادامه کلمه عبور خود را تائید کنید.
     </div>
 
     <BreezeValidationErrors class="mb-4" />
 
     <form @submit.prevent="submit">
         <div>
-            <BreezeLabel for="password" value="Password" />
+            <BreezeLabel for="password" value="کلمه عبور" />
             <BreezeInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="current-password" autofocus />
         </div>
 

@@ -11,23 +11,23 @@
             <Link
                 v-if="$page.props.auth.user"
                 :href="route('dashboard')"
-                class="inline-flex items-center px-7 py-2 mx-2 border-2 rounded-3xl border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out"
+                class="inline-flex items-center px-7 py-2 mx-2 border-2 rounded-3xl border-denim-400 text-sm font-medium leading-5 text-denim-400 focus:outline-none focus:border-denim-700 transition duration-150 ease-in-out"
             >
                 داشبورد
             </Link>
 
             <template v-else>
-                <Link
+                <Link  v-if="false"
                     :href="route('login')"
-                    class="inline-flex items-center px-7 py-2 mx-2 border-2 rounded-3xl border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out"
+                    class="inline-flex items-center px-7 py-2 mx-2 border-2 rounded-3xl border-denim-400 text-sm font-medium leading-5 text-denim-400 focus:outline-none focus:border-denim-700 transition duration-150 ease-in-out"
                 >
                     Log in
                 </Link>
 
                 <Link
-                    v-if="canRegister"
+                    v-if="canRegister && false"
                     :href="route('register')"
-                    class="ml-4 inline-flex items-center px-7 py-2 mx-2 border-2 rounded-3xl border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out"
+                    class="ml-4 inline-flex items-center px-7 py-2 mx-2 border-2 rounded-3xl border-denim-400 text-sm font-medium leading-5 text-denim-400 focus:outline-none focus:border-denim-700 transition duration-150 ease-in-out"
                 >
                     Register
                 </Link>

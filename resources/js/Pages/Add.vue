@@ -126,7 +126,7 @@
                         <div class="md:w-2/3 text-left">
                             <button
                                 type="submit" :disabled="form.processing"
-                                class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                                class="shadow bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                             >
                                 ثبت
                             </button>
@@ -150,7 +150,7 @@ export default {
     },
     setup() {
         const address_form = useForm({
-            address: "https://www.digikala.com/product/dkp-3091579/%D9%85%DB%8C%D8%B2-%D8%AA%D8%AD%D8%B1%DB%8C%D8%B1-%D9%85%D8%AF%D9%84-%D9%81%D9%88%DA%A9%D8%A7#/tab-comments/&page=1&order=newest_comment"
+            address: ""
         });
         const form = useForm({
             address: address_form.address,
@@ -164,7 +164,6 @@ export default {
     },
     methods: {
         submit() {
-            console.log("we hereee");
             this.form.address = this.address_form.address
             this.address_form.post("/add", {
                 preserveScroll: true,

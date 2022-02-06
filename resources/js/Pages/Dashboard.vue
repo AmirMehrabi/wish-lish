@@ -79,11 +79,11 @@
                                     مشاهده روی دیجیکالا
                                 </a>
 
-                                <a
-                                    href="#"
+                                <button
+                                    @click.prevent="reserveItem(item.id)"
                                     class="opacity-0 group-hover:opacity-100 py-1 px-2 rounded-xl bg-white shadow"
                                 >
-                                    رزرو</a
+                                    رزرو</button
                                 >
                             </div>
                         </div>
@@ -91,6 +91,8 @@
                 </div>
             </div>
         </div>
+
+        <LoginModal name="guest-user" v-if="open == true"></LoginModal>
     </BreezeAuthenticatedLayout>
 </template>
 
@@ -102,6 +104,7 @@ import BreezeDropdownLink from "@/Components/DropdownLink.vue";
 import BreezeNavLink from "@/Components/NavLink.vue";
 import BreezeButtonLink from "@/Components/ButtonLink.vue";
 import BreezeResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import LoginModal from "@/Components/LoginModal.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { Head } from "@inertiajs/inertia-vue3";
 
@@ -109,6 +112,7 @@ export default {
     data() {
         return {
             search: "remaining",
+            open: false,
             filtered_items: this.$props.items,
         };
     },
@@ -119,6 +123,13 @@ export default {
         this.sortBy(this.search);
     },
     methods: {
+        reserveItem(item) {
+            if(!this.$attrs.auth.user) {
+                this.open = true;
+            }
+            console.log(item)
+        },
+
         sortBy(sortKey) {
             this.search = sortKey;
             if (sortKey == "all") {
@@ -146,6 +157,7 @@ export default {
         BreezeButtonLink,
         BreezeResponsiveNavLink,
         Link,
+        LoginModal,
     },
 };
 </script>

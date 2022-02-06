@@ -76,6 +76,7 @@
 
                                 <a
                                     v-if="item.is_reserved == 0"
+                                    @click.prevent="reserveItem(item.id)"
                                     href="#"
                                     class="opacity-0 group-hover:opacity-100 py-1 px-2 rounded-xl bg-white shadow"
                                 >
@@ -87,17 +88,19 @@
                 </div>
             </div>
         </div>
+        <LoginModal name="guest-user" v-if="open == true" @close="open = false"></LoginModal>
     </BreezeAuthenticatedLayout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import BreezeAuthenticatedLayout from "@/Layouts/Unauthenticated.vue";
 import BreezeApplicationLogo from "@/Components/ApplicationLogo.vue";
 import BreezeDropdown from "@/Components/Dropdown.vue";
 import BreezeDropdownLink from "@/Components/DropdownLink.vue";
 import BreezeNavLink from "@/Components/NavLink.vue";
 import BreezeButtonLink from "@/Components/ButtonLink.vue";
 import BreezeResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import LoginModal from "@/Components/LoginModal.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { Head } from "@inertiajs/inertia-vue3";
 
@@ -105,6 +108,7 @@ export default {
     data() {
         return {
             search: "remaining",
+            open: false,
             filtered_items: this.$props.items,
         };
     },
@@ -116,6 +120,16 @@ export default {
         this.sortBy(this.search);
     },
     methods: {
+        reserveItem(item) {
+            console.log(item);
+
+            if(!this.$attrs.auth.user) {
+                this.open = true;
+            }
+
+            axios.post('/item/reserve').then(response => this.skills = response.data)
+
+        },
         sortBy(sortKey) {
             this.search = sortKey;
             if (sortKey == "all") {
@@ -144,6 +158,7 @@ export default {
         BreezeButtonLink,
         BreezeResponsiveNavLink,
         Link,
+        LoginModal,
     },
 };
 </script>

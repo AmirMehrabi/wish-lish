@@ -29,6 +29,16 @@ class ItemController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reserve()
+    {
+        return 'we here';
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -40,7 +50,7 @@ class ItemController extends Controller
         $request->validate([
             'title' => ['required'],
             'price' => ['required'],
-            'address' => ['sometimes', 'regex:/[(http|ftp|https)]*[www.]*digikala.com/m'],
+            'address' => ['sometimes'],
         ]);
 
         $item = new Item();

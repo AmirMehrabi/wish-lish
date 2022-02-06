@@ -52,7 +52,7 @@ Route::get('/list/{id}/{slug}', function ($id, $slug) {
         'items' => Item::where('user_id', $id)->get(),
         'person' => $user,
     ]);
-})->middleware(['auth', 'verified'])->name('list');
+})->name('list');
 
 Route::get('/add', function () {
     return Inertia::render('Add');
@@ -60,7 +60,7 @@ Route::get('/add', function () {
 
 Route::post('add', function() {
     Request::validate([
-        'address' => ['required', 'regex:/[(http|ftp|https)]*[www.]*digikala.com/m'],
+        'address' => ['required' , 'regex:/[(http|ftp|https)]*[www.]*digikala.com/m'],
     ]);
     $data = OpenGraph::fetch(Request::get('address'), true);
     if(!empty($data['product:price:amount'])) {
@@ -72,6 +72,8 @@ Route::post('add', function() {
       ]);
     //     return $data;
 })->name('getData');
+
+Route::post('item/reserve', [ItemController::class, 'reserve']);
 
 Route::resource('item', ItemController::class);
 

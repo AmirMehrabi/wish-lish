@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Redirect;
+use Inertia\Inertia;
 
 class ItemController extends Controller
 {
@@ -33,9 +34,20 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function reserve()
+    public function reserve(Item $item)
     {
-        return 'we here';
+        $item->reserve();
+
+        if($item->is_reserved == true) {
+            $message = 'آیتم مورد نظر با موفقیت رزرو شد';
+        } else {
+            $message = 'رزرو شما با موفقیت لغو شد';
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => $message,
+            'item' => $item
+        ]);
     }
 
     /**
@@ -116,6 +128,10 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        //
+        // $item->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'آیتم مورد نظر با موفقیت حذف شد'
+        ]);
     }
 }

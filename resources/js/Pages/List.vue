@@ -10,7 +10,7 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-between text-4xl">
+                <div class="flex justify-between text-normal md:text-lg lg:text-xl xl:text-2xl mb-6 pb-2 border-b font-extrabold">
                     <h2>
                         لیست
                         <span>{{ person.name }}</span>
@@ -74,14 +74,12 @@
                                     مشاهده روی دیجیکالا
                                 </a>
 
-                                <a
-                                    v-if="item.is_reserved == 0"
+                                <reserve v-if="item.is_reserved == 0" :item="item"></reserve>
+                                <!-- <a
                                     @click.prevent="reserveItem(item.id)"
                                     href="#"
-                                    class="opacity-0 group-hover:opacity-100 py-1 px-2 rounded-xl bg-white shadow"
-                                >
-                                    رزرو</a
-                                >
+                                    class="opacity-0 group-hover:opacity-100 py-1 px-2 rounded-xl bg-white shadow">
+                                    رزرو</a> -->
                             </div>
                         </div>
                     </div>
@@ -101,6 +99,8 @@ import BreezeNavLink from "@/Components/NavLink.vue";
 import BreezeButtonLink from "@/Components/ButtonLink.vue";
 import BreezeResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import LoginModal from "@/Components/LoginModal.vue";
+import reserve from "@/Components/Reserve.vue";
+
 import { Link } from "@inertiajs/inertia-vue3";
 import { Head } from "@inertiajs/inertia-vue3";
 
@@ -115,6 +115,7 @@ export default {
     props: {
         items: Object,
         person: Object,
+        data: Object,
     },
     mounted: function () {
         this.sortBy(this.search);
@@ -159,6 +160,7 @@ export default {
         BreezeResponsiveNavLink,
         Link,
         LoginModal,
+        reserve,
     },
 };
 </script>

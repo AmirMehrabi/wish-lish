@@ -14,7 +14,7 @@
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div class="hidden space-x-8 sm:-my-px sm:mr-10 sm:flex">
                                 <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     داشبورد
                                 </BreezeNavLink>
@@ -27,28 +27,12 @@
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
-                                <BreezeDropdown align="right" width="48">
-                                    <template #trigger>
-                                        <span class="inline-flex rounded-md">
-                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                                <!-- {{ $page.props.auth.user.name }} -->
-
-                                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </template>
-
-                                    <template #content class="text-right">
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                مدیریت اکانت
-                            </div>
-                                        <BreezeDropdownLink :href="route('logout')" method="post" as="button">
-                                            خروج
-                                        </BreezeDropdownLink>
-                                    </template>
-                                </BreezeDropdown>
+                                <Link :class="'ml-2 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150'" :href="route('login')" :active="route().current('login')">
+                                    ورود
+                                </Link>
+                                <Link :class="'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150'" :href="route('register')" :active="route().current('register')">
+                                    ثبت نام
+                                </Link>
                             </div>
                         </div>
 
@@ -67,21 +51,21 @@
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                        <BreezeResponsiveNavLink :href="route('login')" :active="route().current('login')">
+                            ورود
                         </BreezeResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200">
+                    <div class="pt-2 pb-1 border-t border-gray-200">
                         <!-- <div class="px-4">
                             <div class="font-medium text-base text-gray-800">{{ $page.props.auth.user.name }}</div>
                             <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
                         </div> -->
 
                         <div class="mt-3 space-y-1">
-                            <BreezeResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                            <BreezeResponsiveNavLink :href="route('register')" :active="route().current('login')" method="post" as="button">
+                                ثبت نام
                             </BreezeResponsiveNavLink>
                         </div>
                     </div>
@@ -108,6 +92,7 @@ import BreezeApplicationLogo from '@/Components/ApplicationLogo.vue'
 import BreezeDropdown from '@/Components/Dropdown.vue'
 import BreezeDropdownLink from '@/Components/DropdownLink.vue'
 import BreezeNavLink from '@/Components/NavLink.vue'
+import BreezeButton from '@/Components/Button.vue'
 import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
 import { Link } from '@inertiajs/inertia-vue3';
 
@@ -119,6 +104,7 @@ export default {
         BreezeNavLink,
         BreezeResponsiveNavLink,
         Link,
+        BreezeButton,
     },
 
     data() {

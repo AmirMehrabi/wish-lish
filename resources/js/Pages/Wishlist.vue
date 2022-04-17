@@ -1,7 +1,7 @@
 <template>
     <Head title="داشبورد" />
 
-    <BreezeAuthenticatedLayout>
+    <GuestLayout>
         <!-- <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 داشبورد
@@ -11,13 +11,7 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-between text-normal md:text-lg lg:text-xl xl:text-2xl mb-6 pb-2 border-b font-extrabold">
-                    <h2>لیست من</h2>
-                    <BreezeButtonLink
-                        :href="route('add')"
-                        :active="route().current('add')"
-                    >
-                        افزودن
-                    </BreezeButtonLink>
+                    <h2>لیست {{ user.name }}</h2>
                 </div>
 
                 <div class="rounded-2xl bg-gray-100 flex p-2 mt-4 gap-4">
@@ -46,14 +40,15 @@
                     >
                         رزرو شده
                     </button>
+
                 </div>
                 <div class="mt-7 overflow-x-auto">
                     <table class="w-full whitespace-nowrap">
                         <tbody>
                             <tr
                                 tabindex="0"
-                                class="focus:outline-none h-16 border border-gray-100 rounded"
-                                v-for="(item, key) in filtered_items"
+                                class="focus:outline-none h-16 border border-slate-300 border-gray-100 rounded mb-4 pb-4"
+                                v-for="item in filtered_items"
                                 :key="item.id"
                             >
                                 <td class="">
@@ -119,19 +114,15 @@
                                     </div>
                                 </td>
                                 <td class="pl-5">
-                                    <div
-                                        class="flex items-center"
-                                        v-if="item.address"
-                                    >
-                                        <a
-                                            :href="item.address"
+                                    <div class="flex items-center" v-if="item.address">
+                                        <a :href="item.address"
                                             class="text-sm leading-none text-gray-800 ml-2 underline hover:text-black"
                                         >
                                             لینک محصول
                                         </a>
                                     </div>
                                 </td>
-
+                                
                                 <!-- <td class="pl-5">
                                     <div class="flex items-center">
                                         <svg
@@ -157,33 +148,26 @@
                                     </div>
                                 </td> -->
                                 <td class="pl-5">
-                                    <button
-                                        :class="item.classes"
-                                        class="py-3 px-3 text-sm focus:outline-none leading-none rounded"
+                                    <span :class="item.classes"
+                                        class="p-1 text-sm focus:outline-none leading-none rounded"
                                     >
                                         {{ item.status }}
+                                    </span>
+                                </td>
+                                <td class="pl-4">
+                                    <button @click.prevent="reserveItem(item)" 
+                                        class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none"
+                                    v-text="item.IsReservedByCurrentUser == true ? 'لغو' : 'رزرو'" 
+                                    >
                                     </button>
                                 </td>
-                                <!-- <td class="pl-4" v-if="this.$attrs.auth.user.id == item.user_id">
-                                    <button @click.prevent="reserveItem(item.id)"
-                                        class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none"
-                                    >
-                                        رزرو
-                                    </button>
-                                </td> -->
-                                <td
-                                    class="pl-4"
-                                    v-if="
-                                        this.$attrs.auth.user.id == item.user_id
-                                    "
-                                >
+                                <!-- <td class="pl-4" v-if="this.$attrs.auth.user && this.$attrs.auth.user.id == item.user_id">
                                     <button
-                                        @click.prevent="deleteItem(item, key)"
-                                        class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-white py-3 px-5 bg-red-600 rounded hover:bg-red-500 focus:outline-none"
+                                        class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-red-100 rounded hover:bg-red-200 focus:outline-none"
                                     >
                                         حذف
                                     </button>
-                                </td>
+                                </td> -->
                                 <!-- <td>
                                     <div class="relative px-5 pt-2">
                                         <button
@@ -243,11 +227,10 @@
                                     </div>
                                 </td> -->
                             </tr>
-                            <tr
-                                class="h-3"
-                                v-for="item in filtered_items"
-                                :key="item.id"
-                            ></tr>
+                            <tr class="h-3" v-for="item in filtered_items"
+                        :key="item.id"></tr>
+                            
+                        
                         </tbody>
                     </table>
                 </div>
@@ -290,33 +273,14 @@
                         </div>
                     </div>
                 </div> -->
-
-                <div class="flex justify-between text-normal md:text-lg lg:text-xl xl:text-2xl mb-6 pb-2 border-b font-extrabold">
-                    <h2>لیست خود را با دیگران به اشتراک بگذارید</h2>
-                </div>
-                <div class="w-full text-left flex flex-col lg:flex-row">
-                    <input
-                        :value="this.$attrs.auth.user.url"
-                        class="bg-gray-100 h-14 appearance-none border-2 border-gray-200 rounded-r w-full py-2 px-4 text-gray-700 leading-tight md:text-xl"
-                        id="inline-address"
-                        type="text"
-                    />
-                    <button
-                        type="submit"
-                        class="shadow mt-2 h-14 lg:mt-0 bg-gray-600 hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-2 rounded-l"
-                    >
-                        کپی
-                    </button>
-                </div>
             </div>
         </div>
 
-        <LoginModal name="guest-user" v-if="open == true"></LoginModal>
-    </BreezeAuthenticatedLayout>
+    </GuestLayout>
 </template>
 
 <script>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import GuestLayout from "@/Layouts/Unauthenticated.vue";
 import BreezeApplicationLogo from "@/Components/ApplicationLogo.vue";
 import BreezeDropdown from "@/Components/Dropdown.vue";
 import BreezeDropdownLink from "@/Components/DropdownLink.vue";
@@ -326,6 +290,8 @@ import BreezeResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import LoginModal from "@/Components/LoginModal.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { Head } from "@inertiajs/inertia-vue3";
+import BreezeButton from '@/Components/Button.vue'
+
 
 export default {
     data() {
@@ -337,37 +303,36 @@ export default {
     },
     props: {
         items: Object,
+        user: Object,
     },
     mounted: function () {
         this.sortBy(this.search);
     },
     methods: {
-        reserveItem(item) {
+        reserveItem(item ) {
+            
             if (!this.$attrs.auth.user) {
-                this.open = true;
-            }
-            console.log(item);
-        },
-
-        deleteItem(item, key) {
-            if (this.$attrs.auth.user.id !== item.user_id) {
-                alert("امکان حذف آیتمی که مال خودتان نیست وجود ندارد.");
+                alert('لطفا اگر قصد رزرو آیتمی را دارید، به سیستم وارد شوید.')
                 return;
             }
-            var key = key
-            // if (confirm("آیا واقعا قصد حذف این محصول را دارید؟")) {
-                axios.delete('/item/'+item.id)
-                .then(function (response) {
-                    console.log(key)
-                filtered_items.splice(key, 1)
-                items.splice(key, 1)
-                    console.log(response);
+            if (this.$attrs.auth.user && this.$attrs.auth.user.id == item.user_id) {
+                alert('امکان رزرو آیتم خودتان وجود ندارد.')
+                return;
+            }
+            axios.post('/item/'+item.id+'/reserve')
+            .then(function (response) {
+                item.reserved_by = response.data.item.reserved_by;
+                item.is_reserved = response.data.item.is_reserved;
+                item.IsReservedByCurrentUser = response.data.item.IsReservedByCurrentUser;
+                item.status = response.data.item.status;
+                item.classes = response.data.item.classes;
+                
+                console.log(response);
 
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            // }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
 
         sortBy(sortKey) {
@@ -388,7 +353,7 @@ export default {
         },
     },
     components: {
-        BreezeAuthenticatedLayout,
+        GuestLayout,
         Head,
         BreezeApplicationLogo,
         BreezeDropdown,
@@ -398,6 +363,7 @@ export default {
         BreezeResponsiveNavLink,
         Link,
         LoginModal,
+        BreezeButton,
     },
 };
 </script>

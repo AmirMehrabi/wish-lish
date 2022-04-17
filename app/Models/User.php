@@ -25,6 +25,8 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $appends = ['url'];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -43,6 +45,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getUrlAttribute()
+    {
+        return url('/') . "/wl/" . $this->slug;
+    }
 
 
     /**

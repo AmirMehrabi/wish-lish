@@ -10,18 +10,18 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-between text-4xl">
+                <div class="flex justify-between text-normal md:text-lg lg:text-xl xl:text-2xl mb-6 pb-2 border-b font-extrabold">
                     <h2>افزودن به لیست</h2>
                 </div>
 
                 <form @submit.prevent="submit">
-                    <div class="md:flex md:items-start mb-6">
+                    <!-- <div class="md:flex md:items-start mb-6">
                         <div class="md:w-1/3">
                             <label
                                 class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
                                 for="inline-full-name"
                             >
-                                آدرس آیتم در دیجیکالا
+                                آدرس محصول
                             </label>
                         </div>
                         <div class="md:w-2/3">
@@ -42,7 +42,7 @@
                         <div v-if="errors.address" class="text-red-700" >{{errors.address}}</div>
 
                         </div>
-                    </div>
+                    </div> -->
                 </form>
 
                 <form @submit.prevent="submitItem">
@@ -68,6 +68,34 @@
                         
                     </div>
 
+                    <div class="md:flex md:items-start mb-6">
+                        <div class="md:w-1/3">
+                            <label
+                                class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                for="inline-full-name"
+                            >
+                                آدرس محصول
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                        <div class="w-full text-left flex flex-col lg:flex-row">
+                            <input v-model="form.address"
+                                class="bg-gray-100 appearance-none border-2 border-gray-100 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id="inline-address"
+                                type="text"
+                            />
+                            <!-- <button
+                                type="submit" :disabled="address_form.processing"
+                                class="shadow mt-2 lg:mt-0 bg-gray-600 hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-2 rounded"
+                            >
+                                دریافت
+                            </button> -->
+                            
+                        </div>
+                        <div v-if="errors.address" class="text-red-700" >{{errors.address}}</div>
+
+                        </div>
+                    </div>
                     <div class="md:flex md:items-start mb-6">
                         <div class="md:w-1/3">
                         
@@ -144,6 +172,7 @@ import { reactive } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 
+
 export default {
     props: {
         errors: Object,
@@ -153,7 +182,8 @@ export default {
             address: ""
         });
         const form = useForm({
-            address: address_form.address,
+            // address: address_form.address,
+            address: "",
             title: "",
             description: "",
             price: "",
@@ -169,7 +199,7 @@ export default {
                 preserveScroll: true,
                 onSuccess: (response) => {
                     console.log(response.props.data);
-                    if (response.props.data.type == 'product') {
+                    if (response.props.data.description !== null) {
                         this.form.title = response.props.data.title
                         this.form.description = response.props.data.description
                         this.form.price = response.props.data.price

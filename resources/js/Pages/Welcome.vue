@@ -80,13 +80,13 @@
                         که می‌خوای به اشتراک بذار
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2">
-                        <BreezeButtonLink href="/login" :active="true">
+                    <div class="flex flex-row">
+                        <Link :class="'px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 mr-4'" href="/login" :active="true">
                             ورود
-                        </BreezeButtonLink>
-                        <BreezeButtonLink href="/register">
+                        </Link>
+                        <Link :class="'px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 mr-4'" href="/register">
                             ثبت نام
-                        </BreezeButtonLink>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -41,9 +41,20 @@ Route::get('qr-code-g', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', [
+        
         'items' => Item::where('user_id', auth()->user()->id)->get()
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/wl/{slug}', function ($slug) {
+    $user = User::where('slug', $slug)->firstOrFail();
+    return Inertia::render('Wishlist', [
+        'user' => $user,
+        'items' => Item::where('user_id', $user->id)->get()
+    ]);
+})->name('wishlist');
+
+
 
 Route::get('/list/{id}/{slug}', function ($id, $slug) {
     $user = User::where('slug', $slug)->firstOrFail();
@@ -58,6 +69,17 @@ Route::get('/add', function () {
     return Inertia::render('Add');
 })->middleware(['auth', 'verified'])->name('add');
 
+Route::get('test', function() { 
+    return $tags = get_meta_tags('https://www.digikala.com/product/dkp-7866666/%D8%AF%D8%B1%DB%8C%D9%84-%D9%BE%DB%8C%DA%86-%DA%AF%D9%88%D8%B4%D8%AA%DB%8C-%D9%84%D9%88%DA%A9%D8%B3-%D9%85%D8%AF%D9%84-3240/');
+    $data = OpenGraph::fetch("https://www.digikala.com/product/dkp-7866666/%D8%AF%D8%B1%DB%8C%D9%84-%D9%BE%DB%8C%DA%86-%DA%AF%D9%88%D8%B4%D8%AA%DB%8C-%D9%84%D9%88%DA%A9%D8%B3-%D9%85%D8%AF%D9%84-3240/",    true, 
+    null, 
+    null, 
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36'
+ );
+    // dd($data) ;
+});
+
+
 Route::post('add', function() {
     Request::validate([
         'address' => ['required' , 'regex:/[(http|ftp|https)]*[www.]*digikala.com/m'],
@@ -68,12 +90,13 @@ Route::post('add', function() {
     }
     
     return Inertia::render('Add', [
+        'url' => Request::get('address'),
         'data' => $data,
       ]);
     //     return $data;
 })->name('getData');
 
-Route::post('item/reserve', [ItemController::class, 'reserve']);
+Route::post('item/{item}/reserve', [ItemController::class, 'reserve']);
 
 Route::resource('item', ItemController::class);
 

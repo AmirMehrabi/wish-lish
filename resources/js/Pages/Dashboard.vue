@@ -295,13 +295,14 @@
                     <h2>لیست خود را با دیگران به اشتراک بگذارید</h2>
                 </div>
                 <div class="w-full text-left flex flex-col lg:flex-row">
-                    <input
+                    <input v-on:focus="$event.target.select()" 
+           ref="clone" readonly  @click="copy"
                         :value="this.$attrs.auth.user.url"
                         class="bg-gray-100 h-14 appearance-none border-2 border-gray-200 rounded-r w-full py-2 px-4 text-gray-700 leading-tight md:text-xl"
                         id="inline-address"
                         type="text"
                     />
-                    <button
+                    <button @click="copy"
                         type="submit"
                         class="shadow mt-2 h-14 lg:mt-0 bg-gray-600 hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-2 rounded-l"
                     >
@@ -342,6 +343,11 @@ export default {
         this.sortBy(this.search);
     },
     methods: {
+    copy() {
+      this.$refs.clone.focus();
+      document.execCommand('copy');
+      alert('آدرس پروفایل شما در کلیپ‌بورد ذخیره شد.')
+    },
         reserveItem(item) {
             if (!this.$attrs.auth.user) {
                 this.open = true;

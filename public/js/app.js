@@ -20323,6 +20323,11 @@ __webpack_require__.r(__webpack_exports__);
     this.sortBy(this.search);
   },
   methods: {
+    copy: function copy() {
+      this.$refs.clone.focus();
+      document.execCommand('copy');
+      alert('آدرس پروفایل شما در کلیپ‌بورد ذخیره شد.');
+    },
     reserveItem: function reserveItem(item) {
       if (!this.$attrs.auth.user) {
         this.open = true;
@@ -22721,14 +22726,6 @@ var _hoisted_24 = {
   "class": "w-full text-left flex flex-col lg:flex-row"
 };
 var _hoisted_25 = ["value"];
-
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  type: "submit",
-  "class": "shadow mt-2 h-14 lg:mt-0 bg-gray-600 hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-2 rounded-l"
-}, " کپی ", -1
-/* HOISTED */
-);
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
@@ -22819,13 +22816,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), 128
       /* KEYED_FRAGMENT */
       ))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div\n                    class=\"grid grid-cols-1 lg:grid-cols-2 gap-4 grid-flow-row\"\n                >\n                    <div\n                        v-for=\"item in filtered_items\"\n                        :key=\"item.id\"\n                        class=\"w-full group bg-gradient-to-bl from-denim-100 rounded-3xl drop-shadow-md shadow mt-10 outline-offset-2 hover:ring-2 flex flex-row grid grid-cols-4\"\n                    >\n                        <div v-if=\"item.picture\">\n                            <img\n                                v-if=\"item.picture\"\n                                :src=\"item.picture\"\n                                class=\"h-full rounded-r-3xl rounded-br-3xl\"\n                                alt=\"\"\n                            />\n                        </div>\n                        <div\n                            class=\"p-4 flex flex-col justify-between\"\n                            :class=\"item.picture ? 'col-span-3' : 'col-span-4'\"\n                        >\n                            <div class=\"text-xl\">{{ item.title }}</div>\n                            <div class=\"font-bold text-2xl\">\n                                {{ item.ReadablePrice }} ت\n                            </div>\n                            <div class=\"flex justify-between\">\n                                <a v-if=\"item.address\" :href=\"item.address\">\n                                    مشاهده روی دیجیکالا\n                                </a>\n\n                                <button\n                                    @click.prevent=\"reserveItem(item.id)\"\n                                    class=\"py-1 px-2 rounded-xl bg-white shadow\"\n                                >\n                                    رزرو\n                                </button>\n                            </div>\n                        </div>\n                    </div>\n                </div> "), _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        onFocus: _cache[3] || (_cache[3] = function ($event) {
+          return $event.target.select();
+        }),
+        ref: "clone",
+        readonly: "",
+        onClick: _cache[4] || (_cache[4] = function () {
+          return $options.copy && $options.copy.apply($options, arguments);
+        }),
         value: _this.$attrs.auth.user.url,
         "class": "bg-gray-100 h-14 appearance-none border-2 border-gray-200 rounded-r w-full py-2 px-4 text-gray-700 leading-tight md:text-xl",
         id: "inline-address",
         type: "text"
-      }, null, 8
-      /* PROPS */
-      , _hoisted_25), _hoisted_26])])]), $data.open == true ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_LoginModal, {
+      }, null, 40
+      /* PROPS, HYDRATE_EVENTS */
+      , _hoisted_25), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        onClick: _cache[5] || (_cache[5] = function () {
+          return $options.copy && $options.copy.apply($options, arguments);
+        }),
+        type: "submit",
+        "class": "shadow mt-2 h-14 lg:mt-0 bg-gray-600 hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-2 rounded-l"
+      }, " کپی ")])])]), $data.open == true ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_LoginModal, {
         key: 0,
         name: "guest-user"
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];

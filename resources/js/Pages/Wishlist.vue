@@ -319,6 +319,12 @@ export default {
                 alert('امکان رزرو آیتم خودتان وجود ندارد.')
                 return;
             }
+            if(item.is_reserved == true) {
+                var message = "آیا واقعا قصد لغو رزرو این محصول را دارید؟"
+            } else {
+                var message = "آیا واقعا قصد رزرو این محصول را دارید؟"
+            }
+            if (confirm(message)) {
             axios.post('/item/'+item.id+'/reserve')
             .then(function (response) {
                 item.reserved_by = response.data.item.reserved_by;
@@ -333,6 +339,7 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
+         }
         },
 
         sortBy(sortKey) {

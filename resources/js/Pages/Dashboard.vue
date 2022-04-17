@@ -361,19 +361,21 @@ export default {
                 return;
             }
             var key = key
-            // if (confirm("آیا واقعا قصد حذف این محصول را دارید؟")) {
+
+            if (confirm("آیا واقعا قصد حذف این محصول را دارید؟")) {
+                this.filtered_items.splice(key, 1)
+                this.items.splice(key, 1)
                 axios.delete('/item/'+item.id)
                 .then(function (response) {
                     console.log(key)
-                filtered_items.splice(key, 1)
-                items.splice(key, 1)
+
                     console.log(response);
 
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
-            // }
+            }
         },
 
         sortBy(sortKey) {

@@ -128,7 +128,7 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        // $item->delete();
+        $item->delete();
         return response()->json([
             'status' => 'success',
             'message' => 'آیتم مورد نظر با موفقیت حذف شد'

@@ -15,7 +15,7 @@ class Item extends Model
 
     public function getReadablePriceAttribute()
     {
-        return number_format($this->convert($this->price),0,',',',');
+        return number_format((integer)$this->convert($this->price),0,',',',');
     }
 
     function convert($string) {

@@ -15,9 +15,19 @@ class Item extends Model
 
     public function getReadablePriceAttribute()
     {
-        return number_format($this->price,0,',',',');
+        return number_format($this->convert($this->price),0,',',',');
     }
 
+    function convert($string) {
+        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١','٠'];
+    
+        $num = range(0, 9);
+        $convertedPersianNums = str_replace($persian, $num, $string);
+        $englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
+    
+        return $englishNumbersOnly;
+    }
     public function reserve(){
         $attributed = ['user_id' => auth()->user()->id];
 

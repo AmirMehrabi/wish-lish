@@ -145,7 +145,7 @@
                         </div>
 
                         <div class="md:w-1/3" v-if="form.picture">
-                            <img class="w-40 h-40" :src="form.picture" alt="">
+                            <img loading="lazy" class="w-40 h-40" :src="form.picture" alt="">
                         </div>
                     </div>
 

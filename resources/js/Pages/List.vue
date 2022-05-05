@@ -54,7 +54,7 @@
                         class="w-full group bg-gradient-to-bl from-denim-100 rounded-3xl drop-shadow-md shadow mt-10 outline-offset-2 hover:ring-2 flex flex-row grid grid-cols-4"
                     >
                         <div v-if="item.picture">
-                            <img
+                            <img loading="lazy"
                                 v-if="item.picture"
                                 :src="item.picture"
                                 class="h-full rounded-r-3xl rounded-br-3xl"

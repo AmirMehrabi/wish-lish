@@ -58,7 +58,6 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        // return 'biaaatch';
         $request->validate([
             'title' => ['required'],
             'price' => ['required'],
@@ -67,7 +66,7 @@ class ItemController extends Controller
 
         $item = new Item();
         $item->title = $request->title;
-        $item->price = $request->price;
+        $item->price = $this->convert($request->price);
         if($request->has('address')) {
             $item->address = $request->address;
         }
@@ -133,5 +132,16 @@ class ItemController extends Controller
             'status' => 'success',
             'message' => 'آیتم مورد نظر با موفقیت حذف شد'
         ]);
+    }
+
+    function convert($string) {
+        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١','٠'];
+    
+        $num = range(0, 9);
+        $convertedPersianNums = str_replace($persian, $num, $string);
+        $englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
+    
+        return $englishNumbersOnly;
     }
 }

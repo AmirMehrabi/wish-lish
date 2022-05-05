@@ -64,7 +64,7 @@
                 </div> -->
 
                 <div class="w-full mx-auto flex flex-col items-center gap-4">
-                    <img
+                    <img loading="lazy"
                         src="/images/happy-people.jpg"
                         class="rounded-3xl drop-shadow shadow w-80 h-80"
                         alt=""
